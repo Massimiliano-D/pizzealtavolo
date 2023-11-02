@@ -1,46 +1,42 @@
 package massimiliano.pizzealtavolo;
 
-import massimiliano.pizzealtavolo.classi.Drink;
-import massimiliano.pizzealtavolo.classi.Pizza;
-import massimiliano.pizzealtavolo.classi.Topping;
+import massimiliano.pizzealtavolo.classi.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
 public class BeansConfiguration {
+
+
     @Bean
     Topping getPeperoncino() {
         return new Topping("peperoncino", 0.40, 3);
     }
-
 
     @Bean
     Topping getPanna() {
         return new Topping("panna", 0.60, 6);
     }
 
-
     @Bean
     Topping getVentricina() {
         return new Topping("ventricina", 0.80, 8);
     }
-
 
     @Bean
     Topping getAnanas() {
         return new Topping("ananas", 2.00, 4);
     }
 
-
     @Bean
     Pizza getMarghe() {
         return new Pizza("margherita", 4.99, 1104, new ArrayList<Topping>());
 
     }
-
 
     @Bean
     Pizza getDiavola() {
@@ -50,7 +46,6 @@ public class BeansConfiguration {
         return new Pizza("diavola", 5.99, 1200, ingr);
     }
 
-
     @Bean
     Pizza getAmericana() {
         List<Topping> ingr = new ArrayList<Topping>();
@@ -58,7 +53,6 @@ public class BeansConfiguration {
         ingr.add(getPanna());
         return new Pizza("americana", 10.99, 2400, ingr);
     }
-
 
     @Bean
     Drink getLemonade() {
@@ -99,5 +93,30 @@ public class BeansConfiguration {
         listaBevande.add(getWine());
         System.out.println(listaBevande);
 
+    }
+
+    @Bean
+    Tavolo getTavolo() {
+        return new Tavolo(StatoTavolo.OCCUPATO, 1, 6);
+    }
+
+    @Bean
+    Ordine getOrdine() {
+        List<Pizza> pizza = new ArrayList<>();
+        pizza.add(getMarghe());
+        pizza.add(getMarghe());
+        pizza.add(getDiavola());
+        pizza.add(getDiavola());
+        pizza.add(getAmericana());
+        pizza.add(getAmericana());
+        List<Drink> drink = new ArrayList<>();
+        drink.add(getLemonade());
+        drink.add(getWater());
+        drink.add(getWater());
+        drink.add(getWater());
+        drink.add(getWater());
+        drink.add(getWine());
+
+        return new Ordine(1, StatoOrdine.IN_CORSO, pizza, drink, 6, LocalDateTime.now());
     }
 }
